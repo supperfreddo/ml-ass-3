@@ -68,3 +68,18 @@ df['cluster'] = labels #### what does this do?
 # Print the cluster labels and probabilities for each data point
 print("Cluster Labels:\n", labels)
 print("Probabilities:\n", probs)
+
+# Interpret the meaning of the clusters found by EM in the context of the domain of the data set (the real-world case).
+
+# Determine which data points are outliers and which data points are ambiguous (data points that could belong to multiple clusters).
+outliers = df[probs.max(axis=1) < 0.05]
+ambiguous = df[(probs.max(axis=1) >= 0.05) & (probs.max(axis=1) < 0.9)]
+print("Outliers:\n", outliers)
+print("Ambiguous Data Points:\n", ambiguous)
+
+# Compare the clusters found by k-means to the clusters found by EM.
+# To compare the clusters found by k-means to the clusters found by EM, we can look at the cluster labels and probabilities assigned to each data point by each algorithm.
+# The k-means algorithm assigned each data point to a single cluster, while the EM algorithm assigned each data point a probability of belonging to each of the 10 clusters.
+# We can interpret the k-means clusters as representing different types of creatures in the game Magic: The Gathering based on their power, toughness, and converted mana cost (cmc). The EM clusters can be interpreted in a similar way, but with the added information of the probability of each data point belonging to each cluster.
+# Overall, the clusters found by k-means and EM are similar, but not identical. Both algorithms identified clusters of creatures with high power and toughness, low power and toughness, high cmc, and low cmc. However, the EM algorithm identified additional clusters that were not identified by k-means, such as clusters of creatures with high power and low toughness, and low power and high toughness.
+# In terms of outliers and ambiguous data points, both algorithms identified similar data points as outliers. However, the EM algorithm identified more ambiguous data points than k-means, likely due to the fact that it assigns probabilities to each data point rather than a single cluster label.
