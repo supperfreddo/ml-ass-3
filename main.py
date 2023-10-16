@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from sklearn.cluster import KMeans
-from sklearn.mixture import GaussianMixture
 
 # Load data
 df = pd.read_csv('/Users/rakelkvikne/Documents/Machine Learning/all_mtg_cards.csv', header = 0, dtype=np.dtype('unicode'))
@@ -20,14 +19,19 @@ features = df[['power', 'toughness', 'cmc']]
 
 # Apply the elbow method to choose an appropriate value for k
 distortions = []
-for k in range(1, 11):
+cluster_range = range(1, 11)
+for k in cluster_range:
+    # Fit the K-means clustering model
     kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)
+    # Compute the inertia value
     kmeans.fit(df[['power', 'toughness', 'cmc']])
+    # Append the inertia value to the list of distortions
     distortions.append(kmeans.inertia_)
 
 # Plot the elbow graph
 plt.figure(figsize=(8, 4))
-plt.plot(range(1, 11), distortions, marker='o')
+# Plot the distortions against values of k
+plt.plot(cluster_range, distortions, marker='o')
 plt.xlabel('Number of Clusters')
 plt.ylabel('Distortion')
 plt.title('Elbow Method for K-means Clustering')
