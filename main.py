@@ -3,9 +3,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from sklearn.cluster import KMeans
+from sklearn.mixture import GaussianMixture
 
 # Load data
-df = pd.read_csv('/Users/rakelkvikne/Documents/Machine Learning/all_mtg_cards.csv', header = 0, dtype=np.dtype('unicode'))
+df = pd.read_csv('data/all_mtg_cards.csv', header = 0, dtype=np.dtype('unicode'))
 
 # Convert the power and toughness columns to numeric
 df['power'] = pd.to_numeric(df['power'], errors='coerce')
